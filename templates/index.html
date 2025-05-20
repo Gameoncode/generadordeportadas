@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Portadas UANL</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" type="image/jpg" href="/static/images/ico.ico"/>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            background-color: #002b7f; /* Azul UANL */
+            color: white;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .form-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .form-label {
+            font-weight: bold;
+        }
+        .btn-primary {
+            background-color: #002b7f; /* Azul UANL */
+            border-color: #002b7f;
+        }
+        .btn-primary:hover {
+            background-color: #001e5a;
+            border-color: #001e5a;
+        }
+        .logo-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .logo-container img {
+            height: 60px;
+        }
+        @media (max-width: 768px) {
+            .logo-container img {
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>Generador de Portadas UANL</h1>
+            <p>Preparatoria 8</p>
+        </div>
+    </div>
+
+    <div class="container mb-5">
+        <div class="form-container">
+            <div class="logo-container">
+                <img src="https://uanl.mx/wp-content/uploads/2020/06/uanl.png" alt="Logo UANL" class="img-fluid">
+                <img src="https://preparatoria8.uanl.mx/imagenes/logo_prepa.png" 
+                     alt="Logo Prepa 8" class="img-fluid" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'60\' height=\'60\' viewBox=\'0 0 60 60\'><circle cx=\'30\' cy=\'30\' r=\'25\' fill=\'%23002b7f\'/><text x=\'30\' y=\'25\' font-family=\'Arial\' font-size=\'10\' fill=\'white\' text-anchor=\'middle\'>UANL</text><text x=\'30\' y=\'40\' font-family=\'Arial\' font-size=\'6\' fill=\'white\' text-anchor=\'middle\'>Preparatoria 8</text></svg>'">
+            </div>
+
+            <form action="/" method="post">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="nombre" class="form-label">Nombre completo:</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingresa tu nombre completo" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="grupo" class="form-label">Grupo:</label>
+                        <input type="text" class="form-control" id="grupo" name="grupo" value="691" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="semestre" class="form-label">Semestre:</label>
+                        <input type="text" class="form-control" id="semestre" name="semestre" value="6to" required>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="materia" class="form-label">Materia:</label>
+                    <select class="form-select" id="materia" name="materia" required>
+    <option value="" selected disabled>Selecciona una materia</option>
+    {% for materia in materias %}
+    <option value="{{ materia[0] }}">{{ materia[0] }}</option>
+    {% endfor %}
+</select>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="actividad" class="form-label">Actividad:</label>
+                    <input type="text" class="form-control" id="actividad" name="actividad" placeholder="Nombre de la actividad o tarea" required>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-lg">Generar Portada</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-3">
+        <div class="container">
+            <p class="mb-0">© 2025 Generador de Portadas para la UANL - Preparatoria 8</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
