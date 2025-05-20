@@ -44,48 +44,49 @@ def descargar_imagen(url, verificar_ssl=True):
         return img
 
 def crear_portada_imagen(nombre_alumno, grupo, semestre, materia, profesor, actividad):
-    ancho, alto = 800, 1100
+    ancho, alto = 850, 1100
     imagen = Image.new('RGB', (ancho, alto), color=(255, 255, 255))
     dibujo = ImageDraw.Draw(imagen)
     
     try:
-        fuente_titulo = ImageFont.truetype("arial.ttf", 32)
-        fuente_subtitulo = ImageFont.truetype("arial.ttf", 24)
+        fuente_titulo = ImageFont.truetype("arialbd.ttf", 36)
+        fuente_subtitulo = ImageFont.truetype("arial.ttf", 26)
+        fuente_datos = ImageFont.truetype("arial.ttf", 24)
     except:
-        fuente_titulo = ImageFont.load_default()
-        fuente_subtitulo = ImageFont.load_default()
+        fuente_titulo = fuente_subtitulo = fuente_datos = ImageFont.load_default()
 
     logo_uanl = descargar_imagen(logo_uanl_url)
     logo_prepa = descargar_imagen(logo_prepa_url, verificar_ssl=False)
     
-    logo_uanl.thumbnail((150, 150), Image.LANCZOS)
-    logo_prepa.thumbnail((120, 120), Image.LANCZOS)
+    logo_uanl.thumbnail((160, 160), Image.LANCZOS)
+    logo_prepa.thumbnail((130, 130), Image.LANCZOS)
     
-    imagen.paste(logo_uanl, (50, 50), logo_uanl if logo_uanl.mode == 'RGBA' else None)
-    imagen.paste(logo_prepa, (ancho - 170, 50), logo_prepa if logo_prepa.mode == 'RGBA' else None)
+    imagen.paste(logo_uanl, (60, 60), logo_uanl if logo_uanl.mode == 'RGBA' else None)
+    imagen.paste(logo_prepa, (ancho - 190, 70), logo_prepa if logo_prepa.mode == 'RGBA' else None)
     
-    dibujo.line([(50, 220), (ancho-50, 220)], fill=(0, 43, 121), width=2)
-    
-    dibujo.text((ancho//2, 260), "Universidad Autónoma de Nuevo León", 
-                fill=(0, 43, 121), font=fuente_titulo, anchor="mm")
-    dibujo.text((ancho//2, 300), "Preparatoria 8", 
-                fill=(0, 43, 121), font=fuente_subtitulo, anchor="mm")
-    
-    y_pos = 380
+    # Línea divisoria
+    dibujo.line([(50, 250), (ancho - 50, 250)], fill=(0, 43, 121), width=3)
+
+    # Títulos
+    dibujo.text((ancho // 2, 280), "Universidad Autónoma de Nuevo León", fill=(0, 43, 121), font=fuente_titulo, anchor="mm")
+    dibujo.text((ancho // 2, 330), "Preparatoria 8", fill=(0, 43, 121), font=fuente_subtitulo, anchor="mm")
+
+    y_inicio = 440
+    espacio = 60
     datos = [
         f"Materia: {materia}",
-        f"GPO: {grupo}",
+        f"Grupo: {grupo}",
         f"Semestre: {semestre}",
-        f"Nombre: {nombre_alumno}",
-        f"Prof: {profesor}",
+        f"Alumno: {nombre_alumno}",
+        f"Profesor: {profesor}",
         f"Actividad: {actividad}",
         f"Fecha: {date.today().strftime('%d/%m/%Y')}"
     ]
-    
+
     for dato in datos:
-        dibujo.text((ancho//2, y_pos), dato, fill=(0, 0, 0), font=fuente_subtitulo, anchor="mm")
-        y_pos += 50
-    
+        dibujo.text((ancho // 2, y_inicio), dato, fill=(0, 0, 0), font=fuente_datos, anchor="mm")
+        y_inicio += espacio
+
     unique_id = uuid.uuid4().hex[:8]
     nombre_archivo = f"static/images/Portada_{materia.replace(' ', '_')}_{unique_id}.png"
     imagen.save(nombre_archivo)
