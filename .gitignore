@@ -1,0 +1,47 @@
+# Entornos virtuales
+venv/
+.env/
+.envrc
+.env.local
+
+# Archivos de Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+*.egg
+.Python
+
+# Archivos de desarrollo
+*.swp
+*.swo
+*~
+.DS_Store
+.idea/
+.vscode/
+
+# Archivos generados por Flask/Servidor
+instance/
+.webassets-cache
+
+# Archivos de base de datos
+*.sqlite
+*.db
+
+# Archivos de imágenes generadas (excepto el placeholder)
+static/images/*
+!static/images/.gitkeep
+
+# Archivos de entorno
+.env
+.env.local
+.env.dev
+.env.prod
+
+# Archivos de sistema
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+
+# Archivos de caché
+.cache
