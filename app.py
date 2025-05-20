@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, send_file, make_response
 from datetime import date
 from PIL import Image, ImageDraw, ImageFont
 import os
@@ -49,6 +49,7 @@ def crear_portada_imagen(nombre_alumno, grupo, semestre, materia, profesor, acti
     dibujo = ImageDraw.Draw(imagen)
     
     try:
+        # Intentar usar una fuente que soporte caracteres especiales
         fuente_titulo = ImageFont.truetype("arial.ttf", 32)
         fuente_subtitulo = ImageFont.truetype("arial.ttf", 24)
     except:
@@ -66,6 +67,7 @@ def crear_portada_imagen(nombre_alumno, grupo, semestre, materia, profesor, acti
     
     dibujo.line([(50, 220), (ancho-50, 220)], fill=(0, 43, 121), width=2)
     
+    # Asegúrate de usar texto con codificación UTF-8 correcta
     dibujo.text((ancho//2, 260), "Universidad Autónoma de Nuevo León", 
                 fill=(0, 43, 121), font=fuente_titulo, anchor="mm")
     dibujo.text((ancho//2, 300), "Preparatoria 8", 
@@ -97,7 +99,7 @@ def index():
         nombre_alumno = request.form['nombre']
         grupo = request.form['grupo']
         semestre = request.form['semestre']
-        materia_nombre = request.form['materia']  # Ahora recibe el nombre directamente
+        materia_nombre = request.form['materia']
         actividad = request.form['actividad']
         
         # Buscar la materia seleccionada por nombre
@@ -109,7 +111,8 @@ def index():
             
             fecha_actual = date.today().strftime('%d/%m/%Y')
             
-            return render_template('resultado.html', 
+            # Establecer el tipo de contenido explícitamente para UTF-8
+            response = make_response(render_template('resultado.html', 
                                 materia=materia,
                                 nombre_alumno=nombre_alumno,
                                 grupo=grupo,
@@ -117,12 +120,22 @@ def index():
                                 profesor=profesor,
                                 actividad=actividad,
                                 imagen_portada=imagen_portada.replace('static/', ''),
-                                fecha=fecha_actual)
+                                fecha=fecha_actual))
+            response.headers['Content-Type'] = 'text/html; charset=utf-8'
+            return response
         else:
             return "Materia no encontrada", 400
     
-    # Para GET requests, pasar la lista original de materias
-    return render_template('index.html', materias=materias)
+    # Para GET requests, asegurarse de que se mande con encoding UTF-8
+    response = make_response(render_template('index.html', materias=materias))
+    response.headers['Content-Type'] = 'text/html; charset=utf-8'
+    return response
+
+@app.route('/generar_portada')
+def generar_portada():
+    response = make_response(render_template('portada.html'))
+    response.headers['Content-Type'] = 'text/html; charset=utf-8'
+    return response
 
 if __name__ == '__main__':
     app.run(debug=True)

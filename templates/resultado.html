@@ -8,7 +8,8 @@
     <style>
         body {
             background-color: #f8f9fa;
-            font-family: Arial, sans-serif;
+            font-family: 'Arial Unicode MS', Arial, sans-serif;
+            line-height: 1.6;
         }
         .header {
             background-color: #002b7f;
@@ -70,7 +71,24 @@
             gap: 15px;
             flex-wrap: wrap;
         }
-        @media (max-width: 576px) {
+        
+        /* Ajustes específicos para móviles */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            .header p {
+                font-size: 1rem;
+            }
+            .result-container {
+                padding: 20px 15px;
+            }
+            .info-container {
+                padding: 15px;
+            }
+            .info-title {
+                font-size: 1.4rem;
+            }
             .action-buttons {
                 flex-direction: column;
                 align-items: center;
@@ -81,6 +99,8 @@
                 margin-bottom: 10px;
             }
         }
+        
+        /* Ajustes para impresión */
         @media print {
             .no-print {
                 display: none;
