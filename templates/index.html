@@ -9,8 +9,7 @@
     <style>
         body {
             background-color: #f8f9fa;
-            font-family: 'Arial Unicode MS', Arial, sans-serif;
-            line-height: 1.6;
+            font-family: Arial, sans-serif;
         }
         .header {
             background-color: #002b7f; /* Azul UANL */
@@ -47,42 +46,9 @@
         .logo-container img {
             height: 60px;
         }
-        
-        /* Ajustes específicos para móviles */
         @media (max-width: 768px) {
-            .logo-container {
-                flex-direction: column;
-                gap: 15px;
-                align-items: center;
-            }
-            .logo-container img {
-                height: 50px;
-            }
-            .form-container {
-                padding: 20px 15px;
-            }
-            .header h1 {
-                font-size: 1.8rem;
-            }
-            .header p {
-                font-size: 1rem;
-            }
-            .btn-lg {
-                padding: 0.5rem 1rem;
-                font-size: 1rem;
-            }
-        }
-        
-        /* Ajustes para pantallas muy pequeñas */
-        @media (max-width: 480px) {
             .logo-container img {
                 height: 40px;
-            }
-            .form-container {
-                padding: 15px 10px;
-            }
-            .col-md-3, .col-md-6 {
-                margin-bottom: 10px;
             }
         }
     </style>
@@ -122,10 +88,11 @@
                 <div class="mb-3">
                     <label for="materia" class="form-label">Materia:</label>
                     <select class="form-select" id="materia" name="materia" required>
-                        <option value="" selected disabled>Selecciona una materia</option>
-                        {% for materia in materias %}
-                        <option value="{{ materia[0] }}">{{ materia[0] }}</option>
-                        {% endfor %}
+    <option value="" selected disabled>Selecciona una materia</option>
+    {% for materia in materias %}
+    <option value="{{ materia[0] }}">{{ materia[0] }}</option>
+    {% endfor %}
+</select>
                     </select>
                 </div>
 
